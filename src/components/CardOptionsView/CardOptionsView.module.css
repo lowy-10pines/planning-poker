@@ -1,0 +1,13 @@
+.container {
+    background-color: blanchedalmond;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.card {
+    background-color: #FAFAFA;
+    width: 75px;
+    height: 125px;
+    margin: 0 20px;
+    border-radius: 8px;
+}
