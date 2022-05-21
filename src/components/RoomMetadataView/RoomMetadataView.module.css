@@ -1,0 +1,9 @@
+.container {
+    background-color: peru;
+}
+
+.qr {
+    width: 128px;
+    height: 128px;
+    background-color: black;
+}

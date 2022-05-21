@@ -1,0 +1,15 @@
+.container {
+    background-color: green;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 50%;
+    justify-content: center;
+}
+.participant {
+    width: 100px;
+    height: 100px;
+    background-color: aquamarine;
+    border-radius: 50px;
+}

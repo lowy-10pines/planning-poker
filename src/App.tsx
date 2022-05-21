@@ -1,9 +1,8 @@
 import './App.css';
-import RoomMetadataView from './components/RoomMetadataView';
-import ParticipantsView from './components/ParticipantsView';
-import ResultView from './components/ResultView';
+import { RoomMetadataView } from './components/RoomMetadataView';
+import { ResultView } from './components/ResultView';
 import { CardOptionsView } from './components/CardOptionsView';
-
+import { ParticipantsView } from './components/ParticipantsView';
 
 function App() {
   return (
