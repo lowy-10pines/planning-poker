@@ -1,13 +1,10 @@
+import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { addParticipant, createRoom } from "../repositories/RoomRepository";
+import Room from "../types/Room";
 import { useUser } from "./UserContext";
 
-interface RoomData {
-    isEmpty: boolean;
-    code: string;
-    issue: string;
-    participants: Array<{id: string, name: string, vote: string}>
-    voting: boolean;
+interface RoomData extends Room {
     generateRoom: () => void;
     joinRoom: (code: string) => void;
 }
@@ -37,24 +34,28 @@ export const RoomContextProvider: FC<RoomContextProps> = ({ children }) => {
 
     useEffect(() => {
         if (!roomCode) { return }
-        // TODO: Subscribe to room state using code from firebase here
-        setState(prev => {
-            return {
-                ...prev,
-                code: roomCode,
-                isEmpty: false,
-                issue: "12345",
-                participants: [
-                    { id: "123", name: "Lowy", vote: "5" },
-                    { id: "default", name: "Default", vote: "" }
-                ],
-                voting: true
-            }
-        })
 
+        const db = getFirestore()
+        const unsub = onSnapshot(doc(db, "rooms", roomCode), (doc) => {
+            const data = doc.data();
+            if (!data) { return }
+
+            setState(prev => {
+                return {
+                    ...prev,
+                    code: data.code,
+                    isEmpty: false,
+                    issue: data.issue,
+                    participants: data.participants,
+                    voting: data.voting
+                }
+            })
+          });
+
+        return () => {
+            unsub && unsub()
+        }
     }, [roomCode])
-    
-
 
     return (<RoomContext.Provider value={state}>
         {children}
