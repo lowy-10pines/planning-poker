@@ -1,5 +1,17 @@
 .container {
     background-color: peru;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: white;
+    font-size: 20pt;
 }
 
 .qr {

@@ -13,15 +13,14 @@ main {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  flex-grow: 1;
 }
 
 footer {
   background-color: #6D5C53;
   color: white;
   width: 100vw;
-  position: absolute;
-  bottom: 0;
-  height: min-content;
+  height: 30px;
   text-align: center;
   padding: 4px;
   box-sizing: border-box;

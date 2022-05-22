@@ -2,7 +2,9 @@
     background-color: hotpink;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
+    gap: 8px;
 }
 .card {
     background-color: #FAFAFA;
