@@ -1,5 +1,5 @@
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
-import { createContext, FC, useContext, useEffect, useState } from "react";
+import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
 import { addParticipant, createRoom } from "../repositories/RoomRepository";
 import Room from "../types/Room";
 import { useUser } from "./UserContext";
@@ -16,21 +16,26 @@ interface RoomContextProps {
   }
 export const RoomContextProvider: FC<RoomContextProps> = ({ children }) => {
     const [roomCode, setRoomCode] = useState<string | null>(null)
+    const [state, setState] = useState<RoomData>(defaultState)
     const user = useUser()
 
-    function joinRoom(code: string) {
-        addParticipant(user, code)
-        setRoomCode(code)
-    }
-    function generateRoom() {
-        const randomCode = createRoom()
-        joinRoom(randomCode)
-    }
+    useEffect(() => {
+        function joinRoom(code: string) {
+            addParticipant(user, code)
+            setRoomCode(code)
+        }
 
-    const [state, setState] = useState<RoomData>({ ...defaultState,
-        generateRoom,
-        joinRoom
-   })
+        function generateRoom() {
+            const randomCode = createRoom()
+            joinRoom(randomCode)
+        }
+
+        setState(prev => ({
+            ...prev,
+            generateRoom,
+            joinRoom
+        }))
+    }, [user, setRoomCode])
 
     useEffect(() => {
         if (!roomCode) { return }

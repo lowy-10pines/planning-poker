@@ -16,10 +16,20 @@ export function CardOptionsView() {
         return userParticipation && value === userParticipation.value
     }
 
+    function tryVote(value: string) {
+        if (room.voting) {
+            setVote(user.id, room.issue, value, room.code)
+        }
+    }
+
     return (
     <div className={styles.container}>
         { Fibonacci.map(value => (
-            <div key={value} className={classes(styles.card, isUserVote(value) ? styles.self : "") } onClick={() => setVote(user.id, room.issue, value, room.code)}>{value}</div>
+            <div 
+                key={value} 
+                className={classes(styles.card, isUserVote(value) ? styles.self : "") } 
+                onClick={() => tryVote(value)}
+            >{value}</div>
         ))}
     </div>
     )

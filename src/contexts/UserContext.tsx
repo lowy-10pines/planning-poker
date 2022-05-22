@@ -1,4 +1,5 @@
 import { createContext, FC, useContext, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 interface UserData {
     id: string;
@@ -9,12 +10,29 @@ const UserContext = createContext<UserData>(defaultState)
 
 interface UserContextProps {
     children: React.ReactNode;
-  }
+}
 export const UserContextProvider: FC<UserContextProps> = ({ children }) => {
-    const [state, setState] = useState<UserData>(defaultState)
+    const auth = getAuth();
+    const startingState = auth.currentUser ? {
+        id: auth.currentUser.uid,
+        name: auth.currentUser.displayName ?? "Anonymous"
+    } : defaultState
+    const [state, setState] = useState<UserData>(startingState)
 
-    // TODO: Subscribe to user state from firebase here
+    onAuthStateChanged(auth, (user) => {
+        if (state.id === user?.uid) { return }
+        if (user) {
+            console.log("Setting state")
+            setState({
+                id: user.uid,
+                name: user.displayName ?? "Anonymous"
+            })
+        } else {
+            setState(defaultState)
+        }
+    });
 
+    console.log(JSON.stringify(state))
     return (<UserContext.Provider value={state}>
         {children}
     </UserContext.Provider>)

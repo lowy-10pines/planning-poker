@@ -8,6 +8,7 @@ import { UserContextProvider } from './contexts/UserContext';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from "firebase/firestore";
 import { VotesContextProvider } from './contexts/VotesContext';
+import { getAuth, signInAnonymously } from 'firebase/auth';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -24,6 +25,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+if (!auth.currentUser) {
+  console.log("Signin in!")
+  signInAnonymously(auth);
+}
 
 root.render(
   <React.StrictMode>

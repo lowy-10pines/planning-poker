@@ -19,3 +19,7 @@
     height: 128px;
     background-color: black;
 }
+
+.roomCode {
+    max-width: 128px;
+}
