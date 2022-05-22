@@ -1,6 +1,6 @@
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { addParticipant, createRoom } from "../repositories/RoomRepository";
+import { setParticipant, createRoom } from "../repositories/RoomRepository";
 import Room from "../types/Room";
 import { useUser } from "./UserContext";
 
@@ -8,7 +8,7 @@ interface RoomData extends Room {
     generateRoom: () => void;
     joinRoom: (code: string) => void;
 }
-const defaultState: RoomData = { isEmpty: true, code: "", issue: "", participants: [], voting: true, generateRoom: () => {}, joinRoom: (_) => {} }
+const defaultState: RoomData = { isEmpty: true, code: "", issue: "", participants: {}, voting: true, generateRoom: () => {}, joinRoom: (_) => {} }
 const RoomContext = createContext<RoomData>(defaultState)
 
 interface RoomContextProps {
@@ -21,7 +21,7 @@ export const RoomContextProvider: FC<RoomContextProps> = ({ children }) => {
 
     useEffect(() => {
         function joinRoom(code: string) {
-            addParticipant(user, code)
+            setParticipant(user, code)
             setRoomCode(code)
         }
 

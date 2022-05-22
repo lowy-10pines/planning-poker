@@ -1,7 +1,6 @@
 import { useRoom } from "../../contexts/RoomContext"
 import { useUser } from "../../contexts/UserContext"
 import { useVotes } from "../../contexts/VotesContext"
-import { classes } from "../../helpers/cssModules"
 import styles from "./ParticipantsView.module.css"
 
 export function ParticipantsView() {
@@ -14,14 +13,14 @@ export function ParticipantsView() {
     }
 
     return (<div className={styles.container}>
-        { room.participants.map(p => {
-            const participation = votes.find(v => v.id === p.id)
+        { Object.keys(room.participants).map(key => {
+            const participation = votes.find(v => v.id === key)
             return (
             <div 
-                key={p.id}
-                className={classes(styles.participant, isCurrentUser(p.id) ? styles.self : "" )} 
+                key={key}
+                className={styles.participant} 
             >
-                <p>{p.name}</p>
+                <p>{room.participants[key]}</p>
                 <p>{room.voting ? (participation ? "Voted!" : "Is Voting...") : (participation?.value ?? "?")}</p>
             </div>
         )}

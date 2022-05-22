@@ -2,6 +2,6 @@ export default interface Room {
     isEmpty: boolean;
     code: string;
     issue: string;
-    participants: Array<{id: string, name: string}>
+    participants: {[id: string]: string};
     voting: boolean;
 }

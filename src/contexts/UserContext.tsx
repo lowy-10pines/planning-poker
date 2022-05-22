@@ -22,7 +22,6 @@ export const UserContextProvider: FC<UserContextProps> = ({ children }) => {
     onAuthStateChanged(auth, (user) => {
         if (state.id === user?.uid) { return }
         if (user) {
-            console.log("Setting state")
             setState({
                 id: user.uid,
                 name: user.displayName ?? "Anonymous"
@@ -31,8 +30,6 @@ export const UserContextProvider: FC<UserContextProps> = ({ children }) => {
             setState(defaultState)
         }
     });
-
-    console.log(JSON.stringify(state))
     return (<UserContext.Provider value={state}>
         {children}
     </UserContext.Provider>)

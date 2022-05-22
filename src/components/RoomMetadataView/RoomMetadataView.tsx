@@ -21,7 +21,9 @@ export function RoomMetadataView() {
 
     if (qrCanvasRef.current && !room.isEmpty) {
         toCanvas(qrCanvasRef.current, room.code, (e) => {
-            console.log("Error getting QR code", e)
+            if (e) {
+                console.error("Error getting QR code", e)
+            }
         })
     }
 
@@ -30,7 +32,7 @@ export function RoomMetadataView() {
         <input ref={nameRef} id="name" type="text" placeholder="Pepita" defaultValue={user.name}></input>
         <input type="button" value="Change" onClick={() => {
             if(nameRef.current && nameRef.current.value) {
-                setCurrentUserName(nameRef.current.value.trim())
+                setCurrentUserName(nameRef.current.value.trim(), room.code)
             }
         }}/><br/>
 

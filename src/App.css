@@ -1,5 +1,4 @@
 main {
-  background-color: darkcyan;
   display: flex;
   flex-direction: column;
   color: #352B26;
@@ -8,7 +7,6 @@ main {
 }
 
 .topContainer {
-  background-color: antiquewhite;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
