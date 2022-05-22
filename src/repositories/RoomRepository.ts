@@ -1,4 +1,4 @@
-import { collection, addDoc, getFirestore, setDoc, doc, updateDoc, arrayRemove, arrayUnion, DocumentReference } from "firebase/firestore"; 
+import { collection, getFirestore, setDoc, doc, updateDoc, DocumentReference } from "firebase/firestore"; 
 import { v4 as uuidv4 } from 'uuid';
 import Room from "../types/Room";
 

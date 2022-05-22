@@ -1,5 +1,5 @@
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
-import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 import { setParticipant, createRoom } from "../repositories/RoomRepository";
 import Room from "../types/Room";
 import { useUser } from "./UserContext";

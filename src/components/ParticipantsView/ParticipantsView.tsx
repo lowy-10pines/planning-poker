@@ -1,16 +1,10 @@
 import { useRoom } from "../../contexts/RoomContext"
-import { useUser } from "../../contexts/UserContext"
 import { useVotes } from "../../contexts/VotesContext"
 import styles from "./ParticipantsView.module.css"
 
 export function ParticipantsView() {
     const room = useRoom()
-    const user = useUser()
     const { votes } = useVotes()
-
-    function isCurrentUser(id: string) {
-        return user.id === id
-    }
 
     return (<div className={styles.container}>
         { Object.keys(room.participants).map(key => {

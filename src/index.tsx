@@ -24,7 +24,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+getFirestore(app);
 const auth = getAuth(app);
 if (!auth.currentUser) {
   signInAnonymously(auth);
