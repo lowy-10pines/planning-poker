@@ -13,3 +13,6 @@
     margin: 0 20px;
     border-radius: 8px;
 }
+.self {
+    border: 1px solid greenyellow;
+}

@@ -1,15 +1,20 @@
-import { useState } from 'react'
+import { useRoom } from '../../contexts/RoomContext'
+import { closeVoting } from '../../repositories/RoomRepository'
 import styles from './ResultView.module.css'
 
 export function ResultView() {
-    const results = [
-        { key: 1, value: 2 },
-        { key: 2, value: 3 },
-        { key: 3, value: 5 },
-        { key: 8, value: 1 },
-        { key: 13, value: 8 },
-        { key: "?", value: 2 },
-    ]
+    const room = useRoom()
+
+    const initial: Array<{key: string, value: number}> = []
+    const results = room.voting ? 
+        [] : // Avoids extra work of calculating votes if voting didn't end
+        room.participants.map(p => p.vote ? p.vote : "?").reduce((acc, v)=> {
+            const exists = acc.some(kv => kv.key === v)
+            return exists ? 
+                acc.map(kv => kv.key === v ? { key: kv.key, value: kv.value + 1 } : kv) :
+                acc.concat({ key: v, value: 1 })
+        }, initial)
+
     const highest = results.reduce((accum, current) => {
         return accum.value >= current.value ? accum : current
     },results[0] ?? { "?": 0 })
@@ -17,10 +22,8 @@ export function ResultView() {
         return accum + current.value
     }, 0)
 
-    const [voting, setVoting] = useState(true);
-
     return (<div className={styles.container}>
-        { !voting && results.map(kv => (
+        { !room.voting && results.map(kv => (
             <div className={styles.result}>
                 { kv.key === highest.key && <p>👑</p> }
                 <label htmlFor={`${kv.key}`}>{kv.key}</label>
@@ -28,6 +31,6 @@ export function ResultView() {
                 <p>{kv.value} votes</p>
             </div>
         ))}
-        { voting && <button onClick={() => setVoting(false)}>Reveal</button> }
+        { room.voting && <button onClick={() => closeVoting(room.code)}>Reveal</button> }
     </div>)
 }
